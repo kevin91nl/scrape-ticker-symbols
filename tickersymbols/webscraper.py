@@ -17,8 +17,8 @@ def get_symbols_from_url(url, treshold_ratio_uppercase=0.9, treshold_ratio_digit
     Given an URL, return a list of symbols found in table columns containing only ticker symbols.
 
     :param url: URL to find the ticker symbols in.
-    :param treshold_ratio_uppercase: Maximum allowed ratio of uppercased strings in a ticker symbol column.
-    :param treshold_ratio_digit: Maximum allowed ratio of strings containing digits in a ticker symbol column.
+    :param treshold_ratio_uppercase: Minimum ratio of uppercased strings in a ticker symbol column.
+    :param treshold_ratio_digit: Maximum ratio of strings containing digits in a ticker symbol column.
     :return: List of ticker symbols.
     """
     # Fetch the HTML
@@ -35,8 +35,8 @@ def get_symbols_from_html(html, treshold_ratio_uppercase=0.9, treshold_ratio_dig
     uppercased strings containing no digits).
 
     :param html: The HTML to find the symbols in.
-    :param treshold_ratio_uppercase: Maximum allowed ratio of uppercased strings in a ticker symbol column.
-    :param treshold_ratio_digit: Maximum allowed ratio of strings containing digits in a ticker symbol column.
+    :param treshold_ratio_uppercase: Minimum ratio of uppercased strings in a ticker symbol column.
+    :param treshold_ratio_digit: Maximum ratio of strings containing digits in a ticker symbol column.
     :return: List of ticker symbols.
     """
     soup = BeautifulSoup(html, 'lxml')
@@ -56,9 +56,9 @@ def get_symbols_from_html(html, treshold_ratio_uppercase=0.9, treshold_ratio_dig
                 if len(column_data) <= cell_count:
                     column_data.append([])
                     column_metadata.append({
-                        'num_rows': 0,          # Number of rows
-                        'num_uppercased': 0,    # Number of rows containing uppercased strings
-                        'num_digit': 0,         # Number of rows containing digits
+                        'num_rows': 0,  # Number of rows
+                        'num_uppercased': 0,  # Number of rows containing uppercased strings
+                        'num_digit': 0,  # Number of rows containing digits
                     })
 
                 # Strip whitespace
@@ -92,14 +92,21 @@ def get_symbols_from_html(html, treshold_ratio_uppercase=0.9, treshold_ratio_dig
     # Give back the results
     return symbols
 
+
 if __name__ == '__main__':
     # Fetch the arguments
     parser = ArgumentParser(description='Scrape all ticker symbols from a given URL.')
     parser.add_argument('url', help='The URL to scrape.')
+    parser.add_argument('--separator', help='The separator between symbols.', default=',')
+    parser.add_argument('--treshold-uppercase',
+                        help='Minimum ratio of uppercased strings in a ticker symbol column.',
+                        type=float,
+                        default=0.9)
+    parser.add_argument('--treshold-digit',
+                        help='Maximum ratio of strings containing digits in a ticker symbol column.',
+                        type=float,
+                        default=0.0)
     args = parser.parse_args()
 
     # Print out the found symbols
-    for symbol in get_symbols_from_url(args.url):
-        print(symbol)
-
-
+    print(args.separator.join(get_symbols_from_url(args.url, args.treshold_uppercase, args.treshold_digit)))

@@ -4,10 +4,10 @@ Scrape ticker symbols from an URL. The script is compatible with Python 2 and Py
 
 ## Installation
 
-Install the dependencies:
+Simply execute the following:
 
 ```
-pip install -r requirements.txt
+pip install scrape-ticker-symbols
 ```
 
 ## Usage examples
@@ -18,19 +18,14 @@ pip install -r requirements.txt
 Fetch S&P 500 index ticker symbols:
 
 ```
-python scrape_symbols.py https://en.wikipedia.org/wiki/List_of_S%26P_500_companies
+from tickersymbols.webscraper import get_symbols_from_url
+
+print(get_symbols_from_url('https://en.wikipedia.org/wiki/List_of_S%26P_500_companies'))
 ```
 
 The output:
 ```
-MMM
-ABT
-ABBV
-ACN
-ATVI
-AYI
-ADBE
-...
+['MMM', 'ABT', 'ABBV', 'ACN', 'ATVI', 'AYI', 'ADBE', ...]
 ```
 
 ### AEX index
@@ -39,17 +34,12 @@ ADBE
 Fetch AEX index ticker symbols:
 
 ```
-python scrape_symbols.py https://en.wikipedia.org/wiki/AEX_index
+from tickersymbols.webscraper import get_symbols_from_url
+
+print(get_symbols_from_url('https://en.wikipedia.org/wiki/AEX_index'))
 ```
 
 The output:
 ```
-AALB
-ABN
-AGN
-ADRNY
-AKZA
-ATC
-MT
-...
+['AALB', 'ABN', 'AGN', 'ADRNY', 'AKZA', 'ATC', 'MT', ...]
 ```
