@@ -6,7 +6,7 @@ setup(
     install_requires=[
         'beautifulsoup4==4.6.0',
         'lxml==3.8.0',
-        'requests==2.18.1'
+        'requests==2.20.0'
     ],
     version='0.5',
     description='Scrape all ticker symbols from a given URL.',
