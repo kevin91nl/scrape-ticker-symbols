@@ -5,7 +5,7 @@ setup(
     packages=['tickersymbols'],
     install_requires=[
         'beautifulsoup4==4.6.0',
-        'lxml==3.8.0',
+        'lxml==4.6.3',
         'requests==2.18.1'
     ],
     version='0.5',
